@@ -1,0 +1,13 @@
+NGINX_PORT=9999
+
+POSTGRES_DB=template_db
+POSTGRES_USER=template_db_user
+POSTGRES_PASSWORD=template_db_pass
+
+MYSQL_ROOT_PASSWORD=root
+MYSQL_USER=template_db_user
+MYSQL_PASSWORD=template_db_pass
+MYSQL_DATABASE=template_db
+
+API_URL=http://api.url:9001
+APP_URL=http://app.url:9002

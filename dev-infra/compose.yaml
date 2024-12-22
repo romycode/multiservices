@@ -1,0 +1,50 @@
+networks:
+  template-network:
+    name: simplenet
+
+volumes:
+  msyql_volume:
+  postgres_volume:
+
+services:
+
+  nginx:
+    image: nginx:alpine
+    env_file: env
+    volumes:
+      - './rootfs/etc/nginx/templates:/etc/nginx/templates'
+      - './rootfs/etc/nginx/conf.d/websockets.conf:/etc/nginx/conf.d/websockets.conf'
+    ports:
+      - "9999:9999"
+    networks:
+      template-network:
+
+  mysql:
+    image: mysql:8
+    env_file: env
+    volumes:
+      - './rootfs/var/lib/mysql/init.d:/docker-entrypoint-initdb.d'
+      - 'msyql_volume:/var/lib/mysql'
+    ports:
+      - "3306:3306"
+    networks:
+          template-network:
+
+  postgres:
+    image: postgres:16-alpine
+    env_file: env
+    volumes:
+      - './rootfs/var/lib/postgresql/init.d:/docker-entrypoint-initdb.d'
+      - 'postgres_volume:/var/lib/postgresql/data'
+    ports:
+      - "5432:5432"
+    networks:
+      template-network:
+
+  redis:
+    image: redis:alpine
+    env_file: env
+    ports:
+      - "6379:6379"
+    networks:
+      template-network:
